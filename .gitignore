@@ -9,3 +9,4 @@ venv/
 .vscode/
 data/
 out/
+main.py

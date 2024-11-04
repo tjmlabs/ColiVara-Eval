@@ -65,41 +65,82 @@ The required Python packages are listed in `requirements.txt`, including:
      COLIVARA_API_KEY=your_api_key_here
      COLIVARA_BASE_URL=https://api.colivara.com
      ```
-
 ## Usage
 
-### Evaluation
+The Colivara Evaluation Project provides a streamlined interface for managing and evaluating document collections within Colivara. The primary entry points for usage are `main.py`, for performing document upsert and evaluation, and `collection_manager.py`, which allows for managing collections directly.
 
-The main script, `main.py`, initiates the document upsertion process and evaluates the RAG model on Colivara. It requires two arguments: `--collection_name` to specify the target collection and `--n_rows` to define the number of rows to load from the dataset for testing.
+### Document Upsert and Evaluation with `main.py`
 
-Example:
+The `main.py` script enables you to upsert documents into Colivara collections, perform relevance evaluation, or both. It allows selective processing of single datasets or batch processing across all available datasets, making it adaptable for various scenarios.
+
+#### Key Arguments
+
+- **`--n_rows`**: Specify the number of rows to load from the dataset for processing. This is optional; if not provided, the script will load all rows.
+- **`--upsert`**: Include this flag if you want to upsert documents into Colivara. 
+- **`--evaluate`**: Use this flag to evaluate the RAG model on the specified collection(s) and output the relevance metrics.
+- **`--all_files`**: Processes all datasets in the `DOCUMENT_FILES` list.
+- **`--specific_file`**: Specify a single file to process by name (must match one of the files in `DOCUMENT_FILES`).
+- **`--collection_name`**: Use this to define a custom collection name when processing a specific file. If not provided, the script defaults to the predefined collection name for that file.
+
+### Example Commands
+
+#### 1. Upserting and Evaluating a Single Dataset
+
+To upsert documents from a specific dataset and evaluate relevance, run:
 ```bash
-python main.py --collection_name test_collection --n_rows 100
+python main.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_collection --upsert --evaluate
 ```
 
-- **`--collection_name`**: The name of the collection to upsert documents into. If the collection doesn't exist, it will be created.
-- **`--n_rows`**: The number of rows to load from the dataset. This allows for flexible testing with subsets of data.
+This command will:
+- Upsert all documents from `arxivqa_test_subsampled.pkl` into `arxivqa_collection` if it doesn’t already exist.
+- Run the evaluation, outputting relevance metrics based on NDCG@5.
 
-The output will include the total number of documents upserted and the average NDCG@5 score for the queries in the dataset, providing insight into the relevance of the search results returned by Colivara.
 
-### Running Collection Manager
 
-The `collection_manager.py` script provides utilities to list and delete collections within Colivara. This script uses argparse to specify the operation (`--list` or `--delete`) and the collection name to delete, if applicable.
+#### 2. Evaluating All Datasets without Upserting (Primary Use Case)
 
-#### List Collections
-To list all existing collections:
+To evaluate the relevance of all datasets without performing any upsert operations, use the following command:
+
 ```bash
-python collection_manager.py --list
+python main.py --all_files --evaluate
 ```
 
-#### Delete a Collection
-To delete a specific collection, use the `--delete` flag followed by the collection name:
+This command will:
+- Perform a relevance evaluation (NDCG@5) on all datasets listed in `DOCUMENT_FILES` without modifying the collections.
+- Save the results in the `out/` directory:
+  - **`out/avg_ndcg_scores.pkl`** – Contains the average NDCG@5 score for each dataset.
+  - **`out/ndcg_scores.pkl`** – Provides detailed NDCG scores for each query.
+
+This example is ideal for scenarios where collections have already been upserted and only relevance metrics are required for ongoing analysis or benchmarking.
+
+#### 3. Processing All Datasets (Upsert and Evaluate)
+
+To upsert documents and evaluate relevance for all datasets:
 ```bash
-python collection_manager.py --delete test_collection
+python main.py --all_files --upsert --evaluate
 ```
 
-- **`--delete`**: Specifies the collection name to delete. Ensure that you have the correct collection name, as this action is irreversible.
+This command will:
+- Loop through all datasets in `DOCUMENT_FILES`, upserting documents into their corresponding collections.
+- Evaluate each collection and output the average and detailed NDCG scores to the `out/` directory.
 
+### Collection Management with `collection_manager.py`
+
+The `collection_manager.py` script provides utilities for listing and deleting collections within Colivara.
+
+#### Commands
+
+- **List All Collections**
+  ```bash
+  python collection_manager.py --list
+  ```
+  Displays all existing collections within Colivara.
+
+- **Delete a Collection**
+  ```bash
+  python collection_manager.py --delete <collection_name>
+  ```
+  Deletes the specified collection. This action is irreversible, so ensure that the correct collection name is provided.
 
 ## File Structure
 

@@ -34,9 +34,24 @@ def test_ndcg_at_k():
 
 
 def test_evaluate_rag_model():
+    # Mocked data for queries and expected true document IDs
     queries_data = {"query": ["query1", "query2"], "id": [1, 2]}
     queries_df = pd.DataFrame(queries_data)
+
+    # Instantiate the mock client
     client = MockClient()
     collection_name = "test_collection"
-    mean_ndcg = evaluate_rag_model(queries_df, client, collection_name, top_k=3)
+
+    # Evaluate using the RAG model evaluator
+    mean_ndcg, ndcg_scores = evaluate_rag_model(
+        queries_df, client, collection_name, top_k=3
+    )
+
+    # Check mean NDCG score
     assert mean_ndcg == pytest.approx(0.8154, 0.001)
+
+    # Additional check: Verify individual NDCG scores if needed
+    # Here assuming expected individual scores based on mocked search results
+    assert len(ndcg_scores) == len(queries_df)
+    assert ndcg_scores[0] == 1.0
+    assert ndcg_scores[1] == pytest.approx(0.6309, 0.001)
