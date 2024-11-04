@@ -40,7 +40,7 @@ def upsert_documents(
             name=str(df.iloc[i]["id"]),
             document_base64=df.iloc[i]["image_base64"],
             metadata={
-                "doc_id": str(df["docId"][i]),
+                "doc_id": str(df.iloc[i]["id"]),
                 "image_file_name": df["image_filename"][i],
             },
             collection_name=collection_name,

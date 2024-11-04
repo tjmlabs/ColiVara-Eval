@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List, Any
+from typing import List, Any, Tuple
 from tqdm import tqdm
 
 
@@ -39,7 +39,7 @@ def ndcg_at_k(results: List[Any], true_doc_id: int, k: int = 5) -> float:
 
 def evaluate_rag_model(
     queries_df: Any, client: Any, collection_name: str, top_k: int = 5
-) -> float:
+) -> Tuple[float, List[float]]:
     """
     Evaluate a retrieval-augmented generation (RAG) model using NDCG.
 
@@ -50,7 +50,7 @@ def evaluate_rag_model(
         top_k (int, optional): Number of top results to consider. Defaults to 5.
 
     Returns:
-        float: The mean NDCG score for all queries.
+        Tuple[float, List[float]]: The mean NDCG score and a list of individual NDCG scores for each query.
     """
     ndcg_scores = []
     for _, query_data in tqdm(
@@ -63,4 +63,6 @@ def evaluate_rag_model(
         )
         ndcg_score = ndcg_at_k(results.results, true_doc_id, k=top_k)
         ndcg_scores.append(ndcg_score)
-    return np.mean(ndcg_scores)
+
+    mean_ndcg_score = np.mean(ndcg_scores)
+    return mean_ndcg_score, ndcg_scores
