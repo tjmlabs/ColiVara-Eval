@@ -23,16 +23,16 @@ DOCUMENT_FILES = [
 
 # Corresponding list of collection names
 COLLECTION_NAMES = [
-    "arxivqa_collection_small_test",
-    "docvqa_collection_small_test",
-    "infovqa_collection_small_test",
-    "shiftproject_collection_small_test",
-    "synthetic_ai_collection_small_test",
-    "synthetic_energy_collection_small_test",
-    "synthetic_gov_reports_collection_small_test",
-    "synthetic_healthcare_collection_small_test",
-    "tabfquad_collection_small_test",
-    "tatqa_collection_small_test",
+    "arxivqa_collection",
+    "docvqa_collection",
+    "infovqa_collection",
+    "shiftproject_collection",
+    "synthetic_ai_collection",
+    "synthetic_energy_collection",
+    "synthetic_gov_reports_collection",
+    "synthetic_healthcare_collection",
+    "tabfquad_collection",
+    "tatqa_collection",
 ]
 
 # Ensure the output directory exists
