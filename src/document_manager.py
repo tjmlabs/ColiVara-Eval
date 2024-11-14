@@ -44,7 +44,7 @@ def upsert_documents(
                 "image_file_name": df["image_filename"][i],
             },
             collection_name=collection_name,
-            wait=False,
+            wait=True,
         )
 
     return client.list_documents(collection_name)
