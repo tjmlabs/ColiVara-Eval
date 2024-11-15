@@ -1,6 +1,7 @@
 import numpy as np
 from typing import List, Any, Tuple
 from tqdm import tqdm
+import time
 from tenacity import retry, stop_after_attempt, wait_fixed
 
 
@@ -82,6 +83,7 @@ def evaluate_rag_model(
         Tuple[float, List[float]]: The mean NDCG score and a list of individual NDCG scores for each query.
     """
     ndcg_scores = []
+    latencies = []
     for _, query_data in tqdm(
         queries_df.iterrows(), total=len(queries_df), desc="Evaluating"
     ):
@@ -89,9 +91,12 @@ def evaluate_rag_model(
         true_doc_id = query_data["image_filename"]
 
         try:
+            start = time.time()
             results = get_search_results(
                 client, query_text, collection_name, top_k=top_k
             )
+            end = time.time()
+            latencies.append(end - start)
             ndcg_score = ndcg_at_k(results.results, true_doc_id, k=top_k)
         except Exception as e:
             print(f"Failed to retrieve results for query '{query_text}': {e}")
@@ -99,5 +104,6 @@ def evaluate_rag_model(
 
         ndcg_scores.append(ndcg_score)
 
+    avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
     mean_ndcg_score = np.mean(ndcg_scores)
-    return mean_ndcg_score, ndcg_scores
+    return mean_ndcg_score, ndcg_scores, avg_latency

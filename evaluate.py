@@ -93,13 +93,20 @@ def process_file(
     base_file_name = os.path.splitext(query_file)[0]
 
     # Evaluate the RAG model with retry logic
-    avg_ndcg_score, ndcg_scores = evaluate_with_retry(
+    avg_ndcg_score, ndcg_scores, avg_latency = evaluate_with_retry(
         queries_df, client, collection_name
     )
+    collection_info = client.get_collection(collection_name)
+    num_documents = collection_info.num_documents  # Retrieve document count
 
     # Store results for avg_ndcg_score DataFrame
     avg_ndcg_scores_list.append(
-        {"filename": base_file_name, "avg_ndcg_score": avg_ndcg_score}
+        {
+            "filename": base_file_name,
+            "avg_ndcg_score": avg_ndcg_score,
+            "avg_latency": avg_latency,
+            "num_docs": num_documents,
+        }
     )
     # Store results for ndcg_scores DataFrame
     ndcg_scores_dict[base_file_name] = ndcg_scores
