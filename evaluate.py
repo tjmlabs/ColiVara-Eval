@@ -1,9 +1,10 @@
 import argparse
-from typing import List, Optional
+from typing import Optional
 import pandas as pd
 from datetime import datetime
 import os
 from src.evaluator import evaluate_rag_model
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 
 def initialize_client(api_key: str):
@@ -69,6 +70,15 @@ def validate_api_key(api_key: str) -> bool:
         return False
 
 
+@retry(
+    stop=stop_after_attempt(5),  # Retry up to 5 times
+    wait=wait_fixed(2),  # Wait 2 seconds between attempts
+)
+def evaluate_with_retry(queries_df, client, collection_name):
+    """Wrapper around evaluate_rag_model to add retry mechanism."""
+    return evaluate_rag_model(queries_df, client, collection_name)
+
+
 def process_file(
     query_file: str,
     collection_name: str,
@@ -77,14 +87,13 @@ def process_file(
 ):
     client = initialize_client(api_key=api_key)
     queries_df: pd.DataFrame = pd.read_pickle(f"data/queries/{query_file}")
+    queries_df.dropna(subset=["query"], inplace=True)
     if n_rows is not None:
         queries_df = queries_df.head(n_rows).copy()  # Create a copy to avoid warnings
     base_file_name = os.path.splitext(query_file)[0]
 
-    # Evaluate the RAG model
-    avg_ndcg_score: float
-    ndcg_scores: List[float]
-    avg_ndcg_score, ndcg_scores = evaluate_rag_model(
+    # Evaluate the RAG model with retry logic
+    avg_ndcg_score, ndcg_scores = evaluate_with_retry(
         queries_df, client, collection_name
     )
 

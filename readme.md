@@ -1,15 +1,19 @@
 # Colivara Evaluation Project
 
+![Evaluation Results](path/to/your/image.png)
+
 This repository contains a comprehensive evaluation of the [Colivara](https://github.com/tjmlabs/ColiVara) API for document management, search, and retrieval, using a Retrieval-Augmented Generation (RAG) model. This evaluation aims to assess Colivara's capabilities in managing document collections, performing efficient search operations, and calculating relevance metrics to measure performance.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
+- [Evaluation Results](#evaluation-results)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Evaluation](#evaluation) 
-  - [Collection Management](#collection-management)
+  - [Document Upsert with `main.py`](#document-upsert-with-mainpy)
+  - [Relevance Evaluation with `evaluate.py`](#relevance-evaluation-with-evaluatepy)
+  - [Collection Management with `collection_manager.py`](#collection-management-with-collection_managerpy)
 - [File Structure](#file-structure)
 - [Configuration](#configuration)
 - [Technical Details](#technical-details)
@@ -21,6 +25,25 @@ This repository contains a comprehensive evaluation of the [Colivara](https://gi
 ## Project Overview
 
 The goal of this project is to evaluate Colivara’s document retrieval and management features, particularly for applications that rely on high-performance data search and retrieval. This includes testing Colivara's collection and document management, assessing its suitability for various search and retrieval scenarios, and benchmarking the platform with a RAG model to evaluate relevance based on real-world queries.
+
+## Evaluation Results
+
+Below are the summarized evaluation results for the Colivara API performance based on NDCG metrics:
+
+| Benchmark              | Colivara | vidore_colqwen2-v1.0 | vidore_colpali-v1.2 | vidore_colpali |
+|------------------------|----------|----------------------|---------------------|----------------|
+| Average                | NaN      | 89.3                 | 83.9                | 81.3           |
+| TAT-DQA                | NaN      | 81.4                 | 68.0                | 65.8           |
+| Shift Project          | 90.9     | 90.7                 | 79.1                | 73.2           |
+| Artificial Intelligence| 86.9     | 99.4                 | 98.1                | 96.2           |
+| Government Reports     | 85.4     | 96.3                 | 94.8                | 92.7           |
+| ArxivQA                | 88.2     | 88.1                 | 78.0                | 79.1           |
+| DocVQA                 | 55.7     | 60.6                 | 57.2                | 54.4           |
+| Healthcare Industry    | 84.7     | 98.1                 | 96.7                | 94.4           |
+| InfoVQA                | 91.4     | 92.6                 | 82.8                | 81.8           |
+| Energy                 | 87.9     | 95.9                 | 95.2                | 91.0           |
+| TabFQuad               | 54.4     | 89.5                 | 89.7                | 83.9           |
+
 
 ## Features
 
@@ -65,64 +88,75 @@ The required Python packages are listed in `requirements.txt`, including:
      COLIVARA_API_KEY=your_api_key_here
      COLIVARA_BASE_URL=https://api.colivara.com
      ```
+
 ## Usage
 
-The Colivara Evaluation Project provides a streamlined interface for managing and evaluating document collections within Colivara. The primary entry points for usage are `main.py`, for performing document upsert and evaluation, and `collection_manager.py`, which allows for managing collections directly.
+The Colivara Evaluation Project provides a streamlined interface for managing and evaluating document collections within Colivara. The primary entry points for usage are `main.py` for performing document upsert operations and `evaluate.py` for relevance evaluation.
 
-### Document Upsert and Evaluation with `main.py`
+### Document Upsert with `main.py`
 
-The `main.py` script enables you to upsert documents into Colivara collections, perform relevance evaluation, or both. It allows selective processing of single datasets or batch processing across all available datasets, making it adaptable for various scenarios.
+The `main.py` script enables you to upsert documents into Colivara collections. It allows selective processing of single datasets or batch processing across all available datasets, making it adaptable for various scenarios.
 
 #### Key Arguments
 
 - **`--n_rows`**: Specify the number of rows to load from the dataset for processing. This is optional; if not provided, the script will load all rows.
-- **`--upsert`**: Include this flag if you want to upsert documents into Colivara. 
-- **`--evaluate`**: Use this flag to evaluate the RAG model on the specified collection(s) and output the relevance metrics.
+- **`--upsert`**: Include this flag if you want to upsert documents into Colivara.
 - **`--all_files`**: Processes all datasets in the `DOCUMENT_FILES` list.
 - **`--specific_file`**: Specify a single file to process by name (must match one of the files in `DOCUMENT_FILES`).
 - **`--collection_name`**: Use this to define a custom collection name when processing a specific file. If not provided, the script defaults to the predefined collection name for that file.
 
 ### Example Commands
 
-#### 1. Upserting and Evaluating a Single Dataset
+#### 1. Upserting a Single Dataset
 
-To upsert documents from a specific dataset and evaluate relevance, run:
+To upsert documents from a specific dataset, run:
 ```bash
-python main.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_collection --upsert --evaluate
+python main.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_collection --upsert
 ```
 
-This command will:
-- Upsert all documents from `arxivqa_test_subsampled.pkl` into `arxivqa_collection` if it doesn’t already exist.
-- Run the evaluation, outputting relevance metrics based on NDCG@5.
+This command will upsert all documents from `arxivqa_test_subsampled.pkl` into `arxivqa_collection` if it doesn’t already exist.
 
+#### 2. Upserting All Datasets
 
-
-#### 2. Evaluating All Datasets without Upserting (Primary Use Case)
-
-To evaluate the relevance of all datasets without performing any upsert operations, use the following command:
-
+To upsert documents for all datasets:
 ```bash
-python main.py --all_files --evaluate
+python main.py --all_files --upsert
 ```
 
-This command will:
-- Perform a relevance evaluation (NDCG@5) on all datasets listed in `DOCUMENT_FILES` without modifying the collections.
-- Save the results in the `out/` directory:
-  - **`out/avg_ndcg_scores.pkl`** – Contains the average NDCG@5 score for each dataset.
-  - **`out/ndcg_scores.pkl`** – Provides detailed NDCG scores for each query.
+This command will loop through all datasets in `DOCUMENT_FILES`, upserting documents into their corresponding collections.
 
-This example is ideal for scenarios where collections have already been upserted and only relevance metrics are required for ongoing analysis or benchmarking.
+### Relevance Evaluation with `evaluate.py`
 
-#### 3. Processing All Datasets (Upsert and Evaluate)
+The `evaluate.py` script is used to evaluate the relevance of document collections within Colivara.
 
-To upsert documents and evaluate relevance for all datasets:
+#### Key Arguments
+
+- **`--api_key`**: Your Colivara API key for authentication.
+- **`--collection_name`**: Specify the collection name to evaluate.
+- **`--all_files`**: Evaluate all collections listed in `DOCUMENT_FILES`.
+
+### Example Commands
+
+#### 1. Evaluating a Single Collection
+
+To evaluate the relevance of a specific collection, run:
 ```bash
-python main.py --all_files --upsert --evaluate
+python evaluate.py --api_key "your_api_key_here" --collection_name arxivqa_collection
 ```
 
-This command will:
-- Loop through all datasets in `DOCUMENT_FILES`, upserting documents into their corresponding collections.
-- Evaluate each collection and output the average and detailed NDCG scores to the `out/` directory.
+This command will evaluate the specified collection and output the relevance metrics based on NDCG@5.
+
+#### 2. Evaluating All Collections
+
+To evaluate the relevance of all collections:
+```bash
+python evaluate.py --api_key "your_api_key_here" --all_files
+```
+
+This command will perform a relevance evaluation (NDCG@5) on all datasets listed in `DOCUMENT_FILES` and save the results in the `out/` directory:
+- **`out/avg_ndcg_scores.pkl`** – Contains the average NDCG@5 score for each dataset.
+- **`out/ndcg_scores.pkl`** – Provides detailed NDCG scores for each query.
+- **`out/<collection_name>_ndcg_scores.pkl`** – Provides detailed NDCG scores for each query in the specified collection.
 
 ### Collection Management with `collection_manager.py`
 
@@ -188,7 +222,6 @@ The evaluation process includes:
 2. **Extended Metrics**: Add other evaluation metrics like Mean Reciprocal Rank (MRR).
 3. **Benchmarking with Larger Datasets**: Test Colivara's scalability with larger data volumes.
 4. **Automated Testing**: Integrate unit and integration tests for CI/CD compatibility.
-
 
 ## License
 
