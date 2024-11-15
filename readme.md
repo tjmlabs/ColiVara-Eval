@@ -1,8 +1,22 @@
 # Colivara Evaluation Project
 
-![Evaluation Results](path/to/your/image.png)
+![Evaluation Results](assets/evaluation_f_try.jpg)
 
 This repository contains a comprehensive evaluation of the [Colivara](https://github.com/tjmlabs/ColiVara) API for document management, search, and retrieval, using a Retrieval-Augmented Generation (RAG) model. This evaluation aims to assess Colivara's capabilities in managing document collections, performing efficient search operations, and calculating relevance metrics to measure performance.
+
+| Benchmark              | Colivara | vidore_colqwen2-v1.0 | vidore_colpali-v1.2 | vidore_colpali |
+|------------------------|----------|----------------------|---------------------|----------------|
+| Average                | NaN      | 89.3                 | 83.9                | 81.3           |
+| TAT-DQA                | NaN      | 81.4                 | 68.0                | 65.8           |
+| Shift Project          | 90.9     | 90.7                 | 79.1                | 73.2           |
+| Artificial Intelligence| 86.9     | 99.4                 | 98.1                | 96.2           |
+| Government Reports     | 85.4     | 96.3                 | 94.8                | 92.7           |
+| ArxivQA                | 88.2     | 88.1                 | 78.0                | 79.1           |
+| DocVQA                 | 55.7     | 60.6                 | 57.2                | 54.4           |
+| Healthcare Industry    | 84.7     | 98.1                 | 96.7                | 94.4           |
+| InfoVQA                | 91.4     | 92.6                 | 82.8                | 81.8           |
+| Energy                 | 87.9     | 95.9                 | 95.2                | 91.0           |
+| TabFQuad               | 86.6     | 89.5                 | 89.7                | 83.9           | 
 
 ## Table of Contents
 - [Project Overview](#project-overview)
