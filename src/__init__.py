@@ -2,6 +2,9 @@ import os
 import glob
 import importlib
 
+os.environ["COLIVARA_API_KEY"] = "placeholder"
+os.environ["COLIVARA_BASE_URL"] = "https://api.colivara.com"
+
 # Get the directory of the current file
 current_dir = os.path.dirname(__file__)
 
