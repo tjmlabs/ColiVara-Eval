@@ -1,6 +1,6 @@
 # Colivara Evaluation Project
 
-<!-- ![Evaluation Results](assets/evaluation_f_try.jpg) -->
+![Evaluation Results](assets/evaluation_3rd_try.jpg)
 
 This repository contains a comprehensive evaluation of the [Colivara](https://github.com/tjmlabs/ColiVara) API for document management, search, and retrieval, using a Retrieval-Augmented Generation (RAG) model. This evaluation aims to assess Colivara's capabilities in managing document collections, performing efficient search operations, and calculating relevance metrics to measure performance.
 
