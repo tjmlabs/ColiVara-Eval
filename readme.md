@@ -1,22 +1,24 @@
 # Colivara Evaluation Project
 
-![Evaluation Results](assets/evaluation_f_try.jpg)
+<!-- ![Evaluation Results](assets/evaluation_f_try.jpg) -->
 
 This repository contains a comprehensive evaluation of the [Colivara](https://github.com/tjmlabs/ColiVara) API for document management, search, and retrieval, using a Retrieval-Augmented Generation (RAG) model. This evaluation aims to assess Colivara's capabilities in managing document collections, performing efficient search operations, and calculating relevance metrics to measure performance.
 
-| Benchmark              | Colivara | vidore_colqwen2-v1.0 | vidore_colpali-v1.2 | vidore_colpali |
-|------------------------|----------|----------------------|---------------------|----------------|
-| Average                | NaN      | 89.3                 | 83.9                | 81.3           |
-| TAT-DQA                | NaN      | 81.4                 | 68.0                | 65.8           |
-| Shift Project          | 90.9     | 90.7                 | 79.1                | 73.2           |
-| Artificial Intelligence| 86.9     | 99.4                 | 98.1                | 96.2           |
-| Government Reports     | 85.4     | 96.3                 | 94.8                | 92.7           |
-| ArxivQA                | 88.2     | 88.1                 | 78.0                | 79.1           |
-| DocVQA                 | 55.7     | 60.6                 | 57.2                | 54.4           |
-| Healthcare Industry    | 84.7     | 98.1                 | 96.7                | 94.4           |
-| InfoVQA                | 91.4     | 92.6                 | 82.8                | 81.8           |
-| Energy                 | 87.9     | 95.9                 | 95.2                | 91.0           |
-| TabFQuad               | 86.6     | 89.5                 | 89.7                | 83.9           | 
+| Benchmark              | Colivara   | vidore_colqwen2-v1.0 (Current Leader) | vidore_colpali-v1.3 | vidore_colpali |
+|------------------------|------------|----------------------|---------------------|----------------|
+| Average                | 87.6       ↓ | 89.3                 | 84.8                | 81.3           |
+| Tat DQA                | 71.7       ↓ | 81.4                 | 70.4                | 65.8           |
+| Shift Project          | 91.3       ↑ | 90.7                 | 77.4                | 73.2           |
+| Artificial Intelligence| 99.5       ↑ | 99.4                 | 97.4                | 96.2           |
+| Government Reports     | 96.7       ↑ | 96.3                 | 96.2                | 92.7           |
+| ArxivQA                | 88.1       ↑ | 88.1                 | 83.0                | 79.1           |
+| DocVQA                 | 56.1       ↓ | 60.6                 | 58.5                | 54.4           |
+| Healthcare Industry    | 98.3       ↑ | 98.1                 | 96.9                | 94.4           |
+| InfoVQA                | 91.4       ↓ | 92.6                 | 85.7                | 81.8           |
+| Energy                 | 96.3       ↑ | 95.9                 | 95.4                | 91.0           |
+| TabFQuad               | 86.3       ↓ | 89.5                 | 87.4                | 83.9           |
+
+
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -44,19 +46,20 @@ The goal of this project is to evaluate Colivara’s document retrieval and mana
 
 Below are the summarized evaluation results for the Colivara API performance based on NDCG metrics:
 
-| Benchmark              | Colivara | vidore_colqwen2-v1.0 | vidore_colpali-v1.2 | vidore_colpali |
-|------------------------|----------|----------------------|---------------------|----------------|
-| Average                | NaN      | 89.3                 | 83.9                | 81.3           |
-| TAT-DQA                | NaN      | 81.4                 | 68.0                | 65.8           |
-| Shift Project          | 90.9     | 90.7                 | 79.1                | 73.2           |
-| Artificial Intelligence| 86.9     | 99.4                 | 98.1                | 96.2           |
-| Government Reports     | 85.4     | 96.3                 | 94.8                | 92.7           |
-| ArxivQA                | 88.2     | 88.1                 | 78.0                | 79.1           |
-| DocVQA                 | 55.7     | 60.6                 | 57.2                | 54.4           |
-| Healthcare Industry    | 84.7     | 98.1                 | 96.7                | 94.4           |
-| InfoVQA                | 91.4     | 92.6                 | 82.8                | 81.8           |
-| Energy                 | 87.9     | 95.9                 | 95.2                | 91.0           |
-| TabFQuad               | 54.4     | 89.5                 | 89.7                | 83.9           |
+| Benchmark              | Colivara Score | Avg Latency (s) | Num Docs |
+|------------------------|----------|-------------|----------|
+| Average                | 87.6     | ----         | ----      |
+| ArxivQA                | 88.1     | 11.1        | 500      |
+| DocVQA                 | 56.1     | 9.3         | 500      |
+| InfoVQA                | 91.4     | 8.6         | 500      |
+| Shift Project          | 91.3     | 16.8        | 1000     |
+| Artificial Intelligence| 99.5     | 12.8        | 1000     |
+| Energy                 | 96.3     | 14.1        | 1000     |
+| Government Reports     | 96.7     | 14.0        | 1000     |
+| Healthcare Industry    | 98.3     | 20.0        | 1000     |
+| TabFQuad               | 86.3     | 8.1         | 280      |
+| TatQA                  | 71.7     | 20.0        | 1663     |
+
 
 
 ## Features
