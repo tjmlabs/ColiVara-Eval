@@ -1,5 +1,5 @@
 import pandas as pd
-import base64
+
 
 
 def read_pickle_file(file_path: str) -> pd.DataFrame:
@@ -37,10 +37,6 @@ def process_data(df: pd.DataFrame, nrows: int = None) -> pd.DataFrame:
     """
     if nrows is not None:
         df = df.head(nrows).copy()  # Create a copy to avoid warnings
-
-    df.loc[:, "image_base64"] = df["image"].apply(
-        lambda x: base64.b64encode(x["bytes"]).decode("utf-8")
-    )
 
     return df
 

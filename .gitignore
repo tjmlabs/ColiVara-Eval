@@ -10,3 +10,6 @@ venv/
 out/
 draft.py
 data/full/
+.venv/
+uv.lock
+.DS_Store

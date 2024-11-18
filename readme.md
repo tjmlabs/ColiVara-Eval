@@ -72,30 +72,24 @@ Below are the summarized evaluation results for the Colivara API performance bas
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.10+
 - Colivara API (configured and accessible) either self-hosted locally or using the hosted version.
 - [colivara-py](https://github.com/tjmlabs/colivara-py) Python client
 
-### Dependencies
-The required Python packages are listed in `requirements.txt`, including:
-- `pandas`
-- `numpy`
-- `tqdm`
-- `dotenv`
-- `colivara_py` (Colivara client library)
-- `pytest` (for testing)
 
 ## Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/colivara-evaluation.git
-   cd colivara-evaluation
+   git clone https://github.com/tjmlabs/colivara-eval.git
+   cd colivara-eval
    ```
 
 2. **Install the dependencies:**
    ```bash
-   pip install -r requirements.txt
+   uv venv
+   source venv/bin/activate
+   uv sync
    ```
 
 3. **Configure Environment Variables:**
@@ -204,7 +198,6 @@ The `collection_manager.py` script provides utilities for listing and deleting c
 
 - `src/`
   - `client.py`: Initializes the Colivara client.
-  - `config.py`: Loads API key and base URL from environment variables.
   - `data_loader.py`: Handles data loading and base64 image encoding.
   - `document_manager.py`: Manages document upserting and collection creation.
   - `evaluator.py`: Evaluates model performance using NDCG.

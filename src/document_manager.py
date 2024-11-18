@@ -2,6 +2,8 @@ from tqdm import tqdm
 import pandas as pd
 from typing import List, Dict, Any
 from tenacity import retry, stop_after_attempt, wait_fixed
+import base64
+from io import BytesIO
 
 def check_collection(client: Any, collection_name: str) -> bool:
     """
@@ -37,9 +39,17 @@ def upsert_documents(
         client.create_collection(collection_name)
 
     for i in tqdm(range(len(df)), desc="Upserting documents"):
+        # convert image to base64. image looks like this: <PIL.PngImagePlugin.PngImageFile image mode=RG...
+        pil_image = df.iloc[i]["image"]
+        buffered = BytesIO()
+        pil_image.save(buffered, format="PNG")
+        # the reason why do this here, instead of in the data_loader.py, 
+        # is because we want to avoid manipulating the dataset coming from huggingface datasets
+        base64_image = base64.b64encode(buffered.getvalue()).decode()
+
         client.upsert_document(
             name=str(df.iloc[i]["id"]),
-            document_base64=df.iloc[i]["image_base64"],
+            document_base64=base64_image,
             metadata={
                 "doc_id": str(df.iloc[i]["id"]),
                 "image_file_name": df["image_filename"][i],
