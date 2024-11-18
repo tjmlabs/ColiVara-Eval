@@ -8,12 +8,13 @@ OUTPUT_DIR = "data/full"
 
 def download_datasets():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    for dataset in DATASETS:
+    for i, dataset in enumerate(DATASETS):
         dataset = load_dataset(dataset)
         df = pd.DataFrame(dataset["test"])
         # Convert image to bytes
         df['image'] = df['image'].apply(lambda x: {'bytes': x.tobytes()})
-        output_path = os.path.join(OUTPUT_DIR, f"{dataset}.pkl")
+        file_name = DATASETS[i].split("/")[1]
+        output_path = os.path.join(OUTPUT_DIR, f"{file_name}.pkl")
         df.to_pickle(output_path)
         print(f"Saved dataset to {output_path}")
 
