@@ -73,7 +73,7 @@ Below are the summarized evaluation results for the Colivara API performance bas
 ## Requirements
 
 - Python 3.8+
-- Colivara API (configured and accessible)
+- Colivara API (configured and accessible) either self-hosted locally or using the hosted version.
 - [colivara-py](https://github.com/tjmlabs/colivara-py) Python client
 
 ### Dependencies
@@ -105,6 +105,14 @@ The required Python packages are listed in `requirements.txt`, including:
      COLIVARA_API_KEY=your_api_key_here
      COLIVARA_BASE_URL=https://api.colivara.com
      ```
+
+
+4. **Download the Dataset:**
+   - Download the dataset file(s) for evaluation.
+   - Run the following command:
+   ```bash
+   python src/download_datasets.py
+   ```
 
 ## Usage
 
@@ -148,7 +156,6 @@ The `evaluate.py` script is used to evaluate the relevance of document collectio
 
 #### Key Arguments
 
-- **`--api_key`**: Your Colivara API key for authentication.
 - **`--collection_name`**: Specify the collection name to evaluate.
 - **`--all_files`**: Evaluate all collections listed in `DOCUMENT_FILES`.
 
@@ -158,7 +165,7 @@ The `evaluate.py` script is used to evaluate the relevance of document collectio
 
 To evaluate the relevance of a specific collection, run:
 ```bash
-python evaluate.py --api_key "your_api_key_here" --collection_name arxivqa_collection
+python evaluate.py  --collection_name arxivqa_collection
 ```
 
 This command will evaluate the specified collection and output the relevance metrics based on NDCG@5.
@@ -167,7 +174,7 @@ This command will evaluate the specified collection and output the relevance met
 
 To evaluate the relevance of all collections:
 ```bash
-python evaluate.py --api_key "your_api_key_here" --all_files
+python evaluate.py --all_files
 ```
 
 This command will perform a relevance evaluation (NDCG@5) on all datasets listed in `DOCUMENT_FILES` and save the results in the `out/` directory:

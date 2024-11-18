@@ -2,7 +2,19 @@ import os
 from datasets import load_dataset
 import pandas as pd
 
-DATASETS = ["vidore/arxivqa_test_subsampled"]
+
+DATASETS = [
+"vidore/arxivqa_test_subsampled", 
+"vidore/docvqa_test_subsampled", 
+"vidore/infovqa_test_subsampled", 
+"vidore/shiftproject_test", 
+"vidore/syntheticDocQA_artificial_intelligence_test", 
+"vidore/syntheticDocQA_energy_test", 
+"vidore/syntheticDocQA_government_reports_test", 
+"vidore/syntheticDocQA_healthcare_industry_test", 
+"vidore/tabfquad_test_subsampled", 
+"vidore/tatdqa_test"
+]
 
 OUTPUT_DIR = "data/full"
 

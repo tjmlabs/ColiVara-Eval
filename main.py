@@ -17,7 +17,7 @@ DOCUMENT_FILES = [
     "syntheticDocQA_government_reports_test.pkl",
     "syntheticDocQA_healthcare_industry_test.pkl",
     "tabfquad_test_subsampled.pkl",
-    "tatqa_test_subsampled.pkl",
+    "tatdqa_test.pkl",
 ]
 
 # Corresponding list of collection names
@@ -36,7 +36,7 @@ COLLECTION_NAMES = [
 
 # Ensure the output directory exists
 os.makedirs("out", exist_ok=True)
-
+client = get_colivara_client()
 
 def process_file(
     file_name: str,
@@ -44,9 +44,9 @@ def process_file(
     n_rows: Optional[int],
     run_upsert: bool,
 ):
-    client = get_colivara_client()
+    
     df: pd.DataFrame = load_data(f"data/full/{file_name}", nrows=n_rows)
-    base_file_name = os.path.splitext(file_name)[0]
+    os.path.splitext(file_name)[0]
 
     if run_upsert:
         # Upsert documents and ensure all are added

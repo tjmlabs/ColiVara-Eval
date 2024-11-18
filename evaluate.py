@@ -5,13 +5,9 @@ from datetime import datetime
 import os
 from src.evaluator import evaluate_rag_model
 from tenacity import retry, stop_after_attempt, wait_fixed
+from src.client import get_colivara_client
 
-
-def initialize_client(api_key: str):
-    from colivara_py import Colivara
-
-    return Colivara(base_url="https://api.colivara.com", api_key=api_key)
-
+client = get_colivara_client()
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -51,7 +47,7 @@ avg_ndcg_scores_list = []
 ndcg_scores_dict = {}
 
 
-def validate_api_key(api_key: str) -> bool:
+def validate_api_key() -> bool:
     """
     Validate the provided API key by attempting to initialize the client.
 
@@ -62,7 +58,6 @@ def validate_api_key(api_key: str) -> bool:
         bool: True if the API key is valid, False otherwise.
     """
     try:
-        client = initialize_client(api_key=api_key)
         # Attempt to get some basic info to validate the key
         client.list_collections()
         return True
@@ -83,9 +78,7 @@ def process_file(
     query_file: str,
     collection_name: str,
     n_rows: Optional[int],
-    api_key: str,
 ):
-    client = initialize_client(api_key=api_key)
     queries_df: pd.DataFrame = pd.read_pickle(f"data/queries/{query_file}")
     queries_df.dropna(subset=["query"], inplace=True)
     if n_rows is not None:
@@ -118,21 +111,20 @@ def main(
     n_rows: Optional[int],
     all_files: bool,
     collection_name: Optional[str],
-    api_key: str,
 ) -> None:
-    if not validate_api_key(api_key):
+    if not validate_api_key():
         print("Error: Invalid API key provided.")
         return
 
     if all_files:
         for query_file, coll_name in zip(QUERY_FILES, COLLECTION_NAMES):
             print(f"\nProcessing {query_file} with collection {coll_name}...")
-            process_file(query_file, coll_name, n_rows, api_key)
+            process_file(query_file, coll_name, n_rows)
     elif collection_name:
         if collection_name in COLLECTION_NAMES:
             query_file = QUERY_FILES[COLLECTION_NAMES.index(collection_name)]
             print(f"\nProcessing {query_file} with collection {collection_name}...")
-            process_file(query_file, collection_name, n_rows, api_key)
+            process_file(query_file, collection_name, n_rows)
         else:
             print(
                 f"Error: {collection_name} is not in the list of available collections."
@@ -180,17 +172,10 @@ if __name__ == "__main__":
         type=str,
         help="Specify a collection name to process (should be one of the listed collections)",
     )
-    parser.add_argument(
-        "--api_key",
-        type=str,
-        required=True,
-        help="API key for accessing the Colivara client",
-    )
 
     args = parser.parse_args()
     main(
         args.n_rows,
         args.all_files,
         args.collection_name,
-        args.api_key,
     )

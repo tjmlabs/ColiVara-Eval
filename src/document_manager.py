@@ -1,7 +1,7 @@
 from tqdm import tqdm
 import pandas as pd
 from typing import List, Dict, Any
-
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 def check_collection(client: Any, collection_name: str) -> bool:
     """
@@ -18,6 +18,7 @@ def check_collection(client: Any, collection_name: str) -> bool:
     return collection_name in [col.name for col in collections]
 
 
+@retry(stop=stop_after_attempt(8), wait=wait_fixed(3))
 def upsert_documents(
     client: Any, df: pd.DataFrame, collection_name: str
 ) -> List[Dict[str, Any]]:
