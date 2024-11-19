@@ -159,10 +159,25 @@ The `evaluate.py` script is used to evaluate the relevance of document collectio
 
 To evaluate the relevance of a specific collection, run:
 ```bash
-python evaluate.py  --collection_name arxivqa_collection
+python evaluate.py  --collection_name arxivqa_test_subsampled
 ```
 
-This command will evaluate the specified collection and output the relevance metrics based on NDCG@5.
+This command will evaluate the specified collection and output the relevance metrics based on NDCG@5. Here is a list of our collection names that are aleady uploaded.
+
+```python
+COLLECTION_NAMES = [
+    "arxivqa_test_subsampled",
+    "docvqa_test_subsampled",
+    "infovqa_test_subsampled",
+    "shiftproject_test",
+    "syntheticDocQA_artificial_intelligence_test",
+    "syntheticDocQA_energy_test",
+    "syntheticDocQA_government_reports_test",
+    "syntheticDocQA_healthcare_industry_test",
+    "tabfquad_test_subsampled",
+    "tatqa_test_subsampled",
+]
+```
 
 #### 2. Evaluating All Collections
 
