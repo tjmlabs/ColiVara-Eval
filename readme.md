@@ -27,7 +27,7 @@ This repository contains a comprehensive evaluation of the [Colivara](https://gi
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Document Upsert with `main.py`](#document-upsert-with-mainpy)
+  - [Document Upsert with `upsert.py`](#document-upsert-with-upsertpy)
   - [Relevance Evaluation with `evaluate.py`](#relevance-evaluation-with-evaluatepy)
   - [Collection Management with `collection_manager.py`](#collection-management-with-collection_managerpy)
 - [File Structure](#file-structure)
@@ -110,11 +110,11 @@ Below are the summarized evaluation results for the Colivara API performance bas
 
 ## Usage
 
-The Colivara Evaluation Project provides a streamlined interface for managing and evaluating document collections within Colivara. The primary entry points for usage are `main.py` for performing document upsert operations and `evaluate.py` for relevance evaluation.
+The Colivara Evaluation Project provides a streamlined interface for managing and evaluating document collections within Colivara. The primary entry points for usage are `upsert.py` for performing document upsert operations and `evaluate.py` for relevance evaluation.
 
-### Document Upsert with `main.py`
+### Document Upsert with `upsert.py`
 
-The `main.py` script enables you to upsert documents into Colivara collections. It allows selective processing of single datasets or batch processing across all available datasets, making it adaptable for various scenarios.
+The `upsert.py` script enables you to upsert documents into Colivara collections. It allows selective processing of single datasets or batch processing across all available datasets, making it adaptable for various scenarios.
 
 #### Key Arguments
 
@@ -130,7 +130,7 @@ The `main.py` script enables you to upsert documents into Colivara collections. 
 
 To upsert documents from a specific dataset, run:
 ```bash
-python main.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_collection --upsert
+python upsert.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_collection --upsert
 ```
 
 This command will upsert all documents from `arxivqa_test_subsampled.pkl` into `arxivqa_collection` if it doesn’t already exist.
@@ -139,7 +139,7 @@ This command will upsert all documents from `arxivqa_test_subsampled.pkl` into `
 
 To upsert documents for all datasets:
 ```bash
-python main.py --all_files --upsert
+python upsert.py --all_files --upsert
 ```
 
 This command will loop through all datasets in `DOCUMENT_FILES`, upserting documents into their corresponding collections.
@@ -175,7 +175,7 @@ COLLECTION_NAMES = [
     "syntheticDocQA_government_reports_test",
     "syntheticDocQA_healthcare_industry_test",
     "tabfquad_test_subsampled",
-    "tatqa_test_subsampled",
+    "tatdqa_test",
 ]
 ```
 
@@ -217,7 +217,7 @@ The `collection_manager.py` script provides utilities for listing and deleting c
   - `document_manager.py`: Manages document upserting and collection creation.
   - `evaluator.py`: Evaluates model performance using NDCG.
 - `collection_manager.py`: Provides collection listing and deletion tools.
-- `main.py`: Main script for document upsertion and evaluation.
+- `upsert.py`: upsert script for document upsertion.
 - `tests/`: Contains unit tests for the project.
 - `data/`: Stores the dataset for evaluation.
 - `.env`: Environment configuration file (not included in version control).
