@@ -22,7 +22,7 @@ QUERY_FILES = [
     "syntheticDocQA_government_reports_test_queries.pkl",
     "syntheticDocQA_healthcare_industry_test_queries.pkl",
     "tabfquad_test_subsampled_queries.pkl",
-    "tatqa_test_subsampled_queries.pkl",
+    "tatdqa_test_queries.pkl",
 ]
 
 # Corresponding list of collection names
@@ -36,7 +36,7 @@ COLLECTION_NAMES = [
     "syntheticDocQA_government_reports_test",
     "syntheticDocQA_healthcare_industry_test",
     "tabfquad_test_subsampled",
-    "tatqa_test_subsampled",
+    "tatdqa_test",
 ]
 
 # Ensure the output directory exists

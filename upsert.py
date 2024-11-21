@@ -31,12 +31,13 @@ COLLECTION_NAMES = [
     "syntheticDocQA_government_reports_test",
     "syntheticDocQA_healthcare_industry_test",
     "tabfquad_test_subsampled",
-    "tatqa_test_subsampled",
+    "tatdqa_test",
 ]
 
 # Ensure the output directory exists
 os.makedirs("out", exist_ok=True)
 client = get_colivara_client()
+
 
 def process_file(
     file_name: str,
@@ -44,7 +45,6 @@ def process_file(
     n_rows: Optional[int],
     run_upsert: bool,
 ):
-    
     df: pd.DataFrame = load_data(f"data/full/{file_name}", nrows=n_rows)
     os.path.splitext(file_name)[0]
 
