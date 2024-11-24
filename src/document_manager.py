@@ -20,9 +20,10 @@ def check_collection(client: Any, collection_name: str) -> bool:
     return collection_name in [col.name for col in collections]
 
 
-@retry(stop=stop_after_attempt(8), wait=wait_fixed(3))
+
+# if a job failed midway - you can manually adjust start_idx
 def upsert_documents(
-    client: Any, df: pd.DataFrame, collection_name: str
+    client: Any, df: pd.DataFrame, collection_name: str, start_idx: int = 0
 ) -> List[Dict[str, Any]]:
     """
     Upsert documents into a specified collection in the client's database.
@@ -37,8 +38,7 @@ def upsert_documents(
     """
     if not check_collection(client, collection_name):
         client.create_collection(collection_name)
-
-    for i in tqdm(range(len(df)), desc="Upserting documents"):
+    for i in tqdm(range(start_idx, len(df)), desc="Upserting documents"):
         # convert image to base64. image looks like this: <PIL.PngImagePlugin.PngImageFile image mode=RG...
         pil_image = df.iloc[i]["image"]
         buffered = BytesIO()
@@ -46,16 +46,39 @@ def upsert_documents(
         # the reason why do this here, instead of in the data_loader.py, 
         # is because we want to avoid manipulating the dataset coming from huggingface datasets
         base64_image = base64.b64encode(buffered.getvalue()).decode()
-
-        client.upsert_document(
+        upsert_document(
             name=str(df.iloc[i]["id"]),
-            document_base64=base64_image,
+            base64_image=base64_image,
             metadata={
                 "doc_id": str(df.iloc[i]["id"]),
                 "image_file_name": df["image_filename"][i],
             },
             collection_name=collection_name,
-            wait=True,
+            client=client,
         )
-
     return client.list_documents(collection_name)
+
+
+@retry(stop=stop_after_attempt(5), wait=wait_fixed(2))
+def upsert_document(name, base64_image, metadata, collection_name, client):
+    """
+    Upsert a single document into the specified collection in the client's database.
+
+    Args:
+        name (str): The name of the document.
+        base64_image (str): The base64-encoded image.
+        metadata (Dict[str, Any]): Metadata for the document.
+        collection_name (str): The name of the collection to upsert the document into.
+        client (Any): The database client.
+    """
+    
+    success = client.upsert_document(
+        name=name,
+        document_base64=base64_image,
+        metadata=metadata,
+        collection_name=collection_name,
+        wait=True,
+    )
+
+    if not success:
+        raise RuntimeError(f"Failed to upsert document {name} into {collection_name} - retrying...")

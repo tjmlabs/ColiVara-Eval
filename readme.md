@@ -130,10 +130,10 @@ The `upsert.py` script enables you to upsert documents into Colivara collections
 
 To upsert documents from a specific dataset, run:
 ```bash
-python upsert.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_collection --upsert
+python upsert.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_test_subsampled --upsert
 ```
 
-This command will upsert all documents from `arxivqa_test_subsampled.pkl` into `arxivqa_collection` if it doesn’t already exist.
+This command will upsert all documents from `arxivqa_test_subsampled.pkl` into `arxivqa_test_subsampled` if it doesn’t already exist.
 
 #### 2. Upserting All Datasets
 
