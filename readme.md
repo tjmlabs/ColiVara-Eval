@@ -4,20 +4,21 @@
 
 This repository contains a comprehensive evaluation of the [Colivara](https://github.com/tjmlabs/ColiVara) API for document management, search, and retrieval, using a Retrieval-Augmented Generation (RAG) model. This evaluation aims to assess Colivara's capabilities in managing document collections, performing efficient search operations, and calculating relevance metrics to measure performance.
 
-| Benchmark              | Colivara   | vidore_colqwen2-v1.0 (Current Leader) | vidore_colpali-v1.3 | vidore_colpali |
-|------------------------|------------|----------------------|---------------------|----------------|
-| Average                | 87.6       ↓ | 89.3                 | 84.8                | 81.3           |
-| Tat DQA                | 71.7       ↓ | 81.4                 | 70.4                | 65.8           |
-| Shift Project          | 91.3       ↑ | 90.7                 | 77.4                | 73.2           |
-| Artificial Intelligence| 99.5       ↑ | 99.4                 | 97.4                | 96.2           |
-| Government Reports     | 96.7       ↑ | 96.3                 | 96.2                | 92.7           |
-| ArxivQA                | 88.1       ↑ | 88.1                 | 83.0                | 79.1           |
-| DocVQA                 | 56.1       ↓ | 60.6                 | 58.5                | 54.4           |
-| Healthcare Industry    | 98.3       ↑ | 98.1                 | 96.9                | 94.4           |
-| InfoVQA                | 91.4       ↓ | 92.6                 | 85.7                | 81.8           |
-| Energy                 | 96.3       ↑ | 95.9                 | 95.4                | 91.0           |
-| TabFQuad               | 86.3       ↓ | 89.5                 | 87.4                | 83.9           |
+| Benchmark              | Colivara | vidore_colqwen2-v1.0 (Current Leader) | OCR + BM25 (chunk/embed pipeline) | Jina-CLIP (Contrastive VLM) |
+|------------------------|----------|---------------------------------------|----------------------------------|-----------------------------|
+| ArxivQ                | 88.1     | 88.1                                  | 31.6                             | 25.4                        |
+| DocQ                  | 56.1     | 60.6                                  | 36.8                             | 11.9                        |
+| InfoQ                 | 91.4     | 92.6                                  | 62.9                             | 35.5                        |
+| TabF                  | 86.3     | 89.5                                  | 46.5                             | 20.2                        |
+| TATQ                  | 71.7     | 81.4                                  | 62.7                             | 3.3                         |
+| Shift                 | 91.3     | 90.7                                  | 64.3                             | 3.8                         |
+| AI                    | 99.5     | 99.4                                  | 92.8                             | 15.2                        |
+| Energy                | 96.3     | 95.9                                  | 85.9                             | 19.7                        |
+| Gov.                  | 96.7     | 96.3                                  | 83.9                             | 21.4                        |
+| Health.               | 98.3     | 98.1                                  | 87.2                             | 20.8                        |
+| Avg.                  | 87.6     | 89.3                                  | 65.5                             | 17.7                        |
 
+![Evaluation Results](assets/benchmark_comparison_chart.png)
 
 
 ## Table of Contents
