@@ -46,6 +46,25 @@ The goal of this project is to evaluate Colivara’s document retrieval and mana
 
 Below are the summarized evaluation results for the Colivara API performance based on NDCG metrics:
 
+### Release 1.5.0 (hierarchical clustering) - latest
+
+| Benchmark              | Colivara Score | Avg Latency (s) | Num Docs |
+|------------------------|----------|-------------|----------|
+| Average                | 86.8     | ----      | ----      |
+| ArxivQA                | 87.6     | 3.2       | 500      |
+| DocVQA                 | 54.8     | 2.9       | 500      |
+| InfoVQA                | 90.1     | 2.9       | 500      |
+| Shift Project          | 87.7     | 5.3       | 1000     |
+| Artificial Intelligence| 98.7     | 4.3       | 1000     |
+| Energy                 | 96.4     | 4.5       | 1000     |
+| Government Reports     | 96.8     | 4.4       | 1000     |
+| Healthcare Industry    | 98.5     | 4.5       | 1000     |
+| TabFQuad               | 86.6     | 3.7       | 280      |
+| TatDQA                 | 70.9     | 8.4       | 1663     |
+
+
+### Release 1.0.0
+
 | Benchmark              | Colivara Score | Avg Latency (s) | Num Docs |
 |------------------------|----------|-------------|----------|
 | Average                | 87.6     | ----         | ----      |
@@ -58,7 +77,7 @@ Below are the summarized evaluation results for the Colivara API performance bas
 | Government Reports     | 96.7     | 14.0        | 1000     |
 | Healthcare Industry    | 98.3     | 20.0        | 1000     |
 | TabFQuad               | 86.3     | 8.1         | 280      |
-| TatQA                  | 71.7     | 20.0        | 1663     |
+| TatDQA                  | 71.7     | 20.0        | 1663     |
 
 
 
