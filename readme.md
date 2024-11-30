@@ -4,24 +4,24 @@
 
 This repository contains a comprehensive evaluation of the [Colivara](https://github.com/tjmlabs/ColiVara) API for document management, search, and retrieval, using a Retrieval-Augmented Generation (RAG) model. This evaluation aims to assess Colivara's capabilities in managing document collections, performing efficient search operations, and calculating relevance metrics to measure performance.
 
-| Benchmark              | Colivara | vidore_colqwen2-v1.0 (Current Leader) | OCR + BM25 (chunk/embed pipeline) | Jina-CLIP (Contrastive VLM) |
-|------------------------|----------|---------------------------------------|----------------------------------|-----------------------------|
-| ArxivQ                | 88.1     | 88.1                                  | 31.6                             | 25.4                        |
-| DocQ                  | 56.1     | 60.6                                  | 36.8                             | 11.9                        |
-| InfoQ                 | 91.4     | 92.6                                  | 62.9                             | 35.5                        |
-| TabF                  | 86.3     | 89.5                                  | 46.5                             | 20.2                        |
-| TATQ                  | 71.7     | 81.4                                  | 62.7                             | 3.3                         |
-| Shift                 | 91.3     | 90.7                                  | 64.3                             | 3.8                         |
-| AI                    | 99.5     | 99.4                                  | 92.8                             | 15.2                        |
-| Energy                | 96.3     | 95.9                                  | 85.9                             | 19.7                        |
-| Gov.                  | 96.7     | 96.3                                  | 83.9                             | 21.4                        |
-| Health.               | 98.3     | 98.1                                  | 87.2                             | 20.8                        |
-| Avg.                  | 87.6     | 89.3                                  | 65.5                             | 17.7                        |
+| Benchmark | Colivara | vidore_colqwen2-v1.0 (Current Leader) | OCR + BM25 (chunk/embed pipeline) | Jina-CLIP (Contrastive VLM) |
+| --------- | -------- | ------------------------------------- | --------------------------------- | --------------------------- |
+| ArxivQ    | 88.1     | 88.1                                  | 31.6                              | 25.4                        |
+| DocQ      | 56.1     | 60.6                                  | 36.8                              | 11.9                        |
+| InfoQ     | 91.4     | 92.6                                  | 62.9                              | 35.5                        |
+| TabF      | 86.3     | 89.5                                  | 46.5                              | 20.2                        |
+| TATQ      | 71.7     | 81.4                                  | 62.7                              | 3.3                         |
+| Shift     | 91.3     | 90.7                                  | 64.3                              | 3.8                         |
+| AI        | 99.5     | 99.4                                  | 92.8                              | 15.2                        |
+| Energy    | 96.3     | 95.9                                  | 85.9                              | 19.7                        |
+| Gov.      | 96.7     | 96.3                                  | 83.9                              | 21.4                        |
+| Health.   | 98.3     | 98.1                                  | 87.2                              | 20.8                        |
+| Avg.      | 87.6     | 89.3                                  | 65.5                              | 17.7                        |
 
 ![Evaluation Results](assets/benchmark_comparison_chart.png)
 
-
 ## Table of Contents
+
 - [Project Overview](#project-overview)
 - [Evaluation Results](#evaluation-results)
 - [Features](#features)
@@ -49,38 +49,35 @@ Below are the summarized evaluation results for the Colivara API performance bas
 
 ### Release 1.5.0 (hierarchical clustering) - latest
 
-| Benchmark              | Colivara Score | Avg Latency (s) | Num Docs |
-|------------------------|----------|-------------|----------|
-| Average                | 86.8     | ----      | ----      |
-| ArxivQA                | 87.6     | 3.2       | 500      |
-| DocVQA                 | 54.8     | 2.9       | 500      |
-| InfoVQA                | 90.1     | 2.9       | 500      |
-| Shift Project          | 87.7     | 5.3       | 1000     |
-| Artificial Intelligence| 98.7     | 4.3       | 1000     |
-| Energy                 | 96.4     | 4.5       | 1000     |
-| Government Reports     | 96.8     | 4.4       | 1000     |
-| Healthcare Industry    | 98.5     | 4.5       | 1000     |
-| TabFQuad               | 86.6     | 3.7       | 280      |
-| TatDQA                 | 70.9     | 8.4       | 1663     |
-
+| Benchmark               | Colivara Score | Avg Latency (s) | Num Docs |
+| ----------------------- | -------------- | --------------- | -------- |
+| Average                 | 86.8           | ----            | ----     |
+| ArxivQA                 | 87.6           | 3.2             | 500      |
+| DocVQA                  | 54.8           | 2.9             | 500      |
+| InfoVQA                 | 90.1           | 2.9             | 500      |
+| Shift Project           | 87.7           | 5.3             | 1000     |
+| Artificial Intelligence | 98.7           | 4.3             | 1000     |
+| Energy                  | 96.4           | 4.5             | 1000     |
+| Government Reports      | 96.8           | 4.4             | 1000     |
+| Healthcare Industry     | 98.5           | 4.5             | 1000     |
+| TabFQuad                | 86.6           | 3.7             | 280      |
+| TatDQA                  | 70.9           | 8.4             | 1663     |
 
 ### Release 1.0.0
 
-| Benchmark              | Colivara Score | Avg Latency (s) | Num Docs |
-|------------------------|----------|-------------|----------|
-| Average                | 87.6     | ----         | ----      |
-| ArxivQA                | 88.1     | 11.1        | 500      |
-| DocVQA                 | 56.1     | 9.3         | 500      |
-| InfoVQA                | 91.4     | 8.6         | 500      |
-| Shift Project          | 91.3     | 16.8        | 1000     |
-| Artificial Intelligence| 99.5     | 12.8        | 1000     |
-| Energy                 | 96.3     | 14.1        | 1000     |
-| Government Reports     | 96.7     | 14.0        | 1000     |
-| Healthcare Industry    | 98.3     | 20.0        | 1000     |
-| TabFQuad               | 86.3     | 8.1         | 280      |
-| TatDQA                  | 71.7     | 20.0        | 1663     |
-
-
+| Benchmark               | Colivara Score | Avg Latency (s) | Num Docs |
+| ----------------------- | -------------- | --------------- | -------- |
+| Average                 | 87.6           | ----            | ----     |
+| ArxivQA                 | 88.1           | 11.1            | 500      |
+| DocVQA                  | 56.1           | 9.3             | 500      |
+| InfoVQA                 | 91.4           | 8.6             | 500      |
+| Shift Project           | 91.3           | 16.8            | 1000     |
+| Artificial Intelligence | 99.5           | 12.8            | 1000     |
+| Energy                  | 96.3           | 14.1            | 1000     |
+| Government Reports      | 96.7           | 14.0            | 1000     |
+| Healthcare Industry     | 98.3           | 20.0            | 1000     |
+| TabFQuad                | 86.3           | 8.1             | 280      |
+| TatDQA                  | 71.7           | 20.0            | 1663     |
 
 ## Features
 
@@ -96,16 +93,17 @@ Below are the summarized evaluation results for the Colivara API performance bas
 - Colivara API (configured and accessible) either self-hosted locally or using the hosted version.
 - [colivara-py](https://github.com/tjmlabs/colivara-py) Python client
 
-
 ## Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/tjmlabs/colivara-eval.git
    cd colivara-eval
    ```
 
 2. **Install the dependencies:**
+
    ```bash
    uv venv
    source venv/bin/activate
@@ -113,13 +111,13 @@ Below are the summarized evaluation results for the Colivara API performance bas
    ```
 
 3. **Configure Environment Variables:**
+
    - Create a `.env` file in the root directory.
    - Add the following variables:
      ```bash
      COLIVARA_API_KEY=your_api_key_here
      COLIVARA_BASE_URL=https://api.colivara.com
      ```
-
 
 4. **Download the Dataset:**
    - Download the dataset file(s) for evaluation.
@@ -149,6 +147,7 @@ The `upsert.py` script enables you to upsert documents into Colivara collections
 #### 1. Upserting a Single Dataset
 
 To upsert documents from a specific dataset, run:
+
 ```bash
 python upsert.py --specific_file arxivqa_test_subsampled.pkl --collection_name arxivqa_test_subsampled --upsert
 ```
@@ -158,6 +157,7 @@ This command will upsert all documents from `arxivqa_test_subsampled.pkl` into `
 #### 2. Upserting All Datasets
 
 To upsert documents for all datasets:
+
 ```bash
 python upsert.py --all_files --upsert
 ```
@@ -178,6 +178,7 @@ The `evaluate.py` script is used to evaluate the relevance of document collectio
 #### 1. Evaluating a Single Collection
 
 To evaluate the relevance of a specific collection, run:
+
 ```bash
 python evaluate.py  --collection_name arxivqa_test_subsampled
 ```
@@ -202,11 +203,13 @@ COLLECTION_NAMES = [
 #### 2. Evaluating All Collections
 
 To evaluate the relevance of all collections:
+
 ```bash
 python evaluate.py --all_files
 ```
 
 This command will perform a relevance evaluation (NDCG@5) on all datasets listed in `DOCUMENT_FILES` and save the results in the `out/` directory:
+
 - **`out/avg_ndcg_scores.pkl`** – Contains the average NDCG@5 score for each dataset.
 - **`out/ndcg_scores.pkl`** – Provides detailed NDCG scores for each query.
 - **`out/<collection_name>_ndcg_scores.pkl`** – Provides detailed NDCG scores for each query in the specified collection.
@@ -218,9 +221,11 @@ The `collection_manager.py` script provides utilities for listing and deleting c
 #### Commands
 
 - **List All Collections**
+
   ```bash
   python collection_manager.py --list
   ```
+
   Displays all existing collections within Colivara.
 
 - **Delete a Collection**
@@ -246,6 +251,7 @@ The `collection_manager.py` script provides utilities for listing and deleting c
 ## Configuration
 
 The project configuration relies on environment variables defined in a `.env` file:
+
 - `COLIVARA_API_KEY`: API key for authenticating with the Colivara service.
 - `COLIVARA_BASE_URL`: The base URL for accessing Colivara's API.
 
@@ -264,6 +270,7 @@ NDCG normalizes DCG by dividing it by the ideal DCG (IDCG) for a given query, pr
 ### Search Query Evaluation
 
 The evaluation process includes:
+
 1. **Query Processing**: Matching queries against document metadata.
 2. **Relevance Scoring**: Using true document IDs to calculate relevance scores.
 3. **NDCG Calculation**: Aggregating scores to calculate the average relevance.
